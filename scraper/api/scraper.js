@@ -9,10 +9,11 @@ module.exports = fbEventUrl => {
           osmosis
             .find("#upcoming_events_card > div > div:not(:first-child)")
             .set({
-              title: "td:nth-child(2) span",
+              title: "td:nth-child(2) > div > div:first-child span",
               month: "td:nth-child(1) span > span:first-child",
               day: "td:nth-child(1) span > span:nth-child(2)",
-              url: "td:nth-child(2) a@href"
+              time: "td:nth-child(2) > div > div:nth-child(2) span:first-child",
+              url: "td:nth-child(2) > div > div:first-child a@href"
             })
         ])
         .data(data => {
