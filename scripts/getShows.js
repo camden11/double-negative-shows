@@ -114,7 +114,9 @@ const filterEvents = async (events, artists) => {
     }
   });
 
-  return filteredEvents;
+  return filteredEvents.filter(
+    event => !event[FIELDS.date].includes("INVALID")
+  );
 };
 
 const getAirtableMap = async () => {
@@ -149,7 +151,11 @@ const deletePastShows = async map => {
       i * AIRTABLE_POST_LIMIT,
       Math.min((i + 1) * AIRTABLE_POST_LIMIT, pastShows.length)
     );
-    await Airtable.destroy(showSubset);
+    try {
+      await Airtable.destroy(showSubset);
+    } catch (error) {
+      console.log(error);
+    }
   }
   console.log(`Removed ${pastShows.length} past shows`);
 };
@@ -165,14 +171,18 @@ const updateExistingShows = async (shows, map) => {
       i * AIRTABLE_POST_LIMIT,
       Math.min((i + 1) * AIRTABLE_POST_LIMIT, updatedShows.length)
     );
-    await Airtable.replace(
-      showSubset.map(show => {
-        return {
-          id: map[show[FIELDS.title]].id,
-          fields: show
-        };
-      })
-    );
+    try {
+      await Airtable.replace(
+        showSubset.map(show => {
+          return {
+            id: map[show[FIELDS.title]].id,
+            fields: show
+          };
+        })
+      );
+    } catch (error) {
+      console.log(error);
+    }
   }
   console.log(`Updated ${updatedShows.length} shows`);
 };
@@ -184,13 +194,17 @@ const createNewShows = async (shows, map) => {
       i * AIRTABLE_POST_LIMIT,
       Math.min((i + 1) * AIRTABLE_POST_LIMIT, newShows.length)
     );
-    await Airtable.create(
-      showSubset.map(show => {
-        return {
-          fields: show
-        };
-      })
-    );
+    try {
+      await Airtable.create(
+        showSubset.map(show => {
+          return {
+            fields: show
+          };
+        })
+      );
+    } catch (error) {
+      console.log(error);
+    }
   }
   console.log(`Created ${newShows.length} new shows`);
 };

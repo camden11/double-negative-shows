@@ -32,11 +32,11 @@ const formatDay = day => {
 
 const formatTime = timeString => {
   if (!timeString) {
-    return "";
+    return "INVALID";
   }
   const split = timeString.split(" ");
   if (split.length !== 4) {
-    return "";
+    return "INVALID";
   }
   const time = split[1];
   const ampm = split[2];
