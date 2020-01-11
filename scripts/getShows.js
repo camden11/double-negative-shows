@@ -6,13 +6,13 @@ const moment = require("moment");
 const formatDate = require("../utils/formatDate");
 const FIELDS = require("../utils/airtableFieldNames");
 
-const ARTIST_QUERY_LIMIT = 100;
+const PRISMIC_QUERY_LIMIT = 100;
 const AIRTABLE_POST_LIMIT = 10;
 
 const getVenues = async () => {
   const venueData = await Prismic.Client.query(
     Prismic.Predicates.at("document.type", "venue"),
-    { fetchLinks: "city.name" }
+    { fetchLinks: "city.name", pageSize: PRISMIC_QUERY_LIMIT }
   );
 
   const venues = venueData.results
@@ -64,7 +64,7 @@ const getAllArtists = async () => {
   while (!finished) {
     const artistData = await Prismic.Client.query(
       Prismic.Predicates.at("document.type", "artist"),
-      { pageSize: ARTIST_QUERY_LIMIT, page: iteration }
+      { pageSize: PRISMIC_QUERY_LIMIT, page: iteration }
     );
     artistData.results.forEach(artist => {
       allArtists.push({
