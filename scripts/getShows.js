@@ -46,7 +46,7 @@ const getScrapedEvents = async venues => {
         [FIELDS.date]: formatDate(event.month, event.day, event.time),
         [FIELDS.venue]: venue.name,
         [FIELDS.venueId]: venue.uid,
-        [FIELDS.url]: `https://www.facebook.com/${event.url}`,
+        [FIELDS.url]: `https://www.facebook.com${event.url}`,
         [FIELDS.city]: venue.city.name,
         [FIELDS.cityId]: venue.city.uid
       });
