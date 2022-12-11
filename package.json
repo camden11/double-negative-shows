@@ -14,7 +14,7 @@
     "body-parser": "^1.18.3",
     "diff2html": "^2.4.0",
     "dotenv": "^6.0.0",
-    "express": "^4.16.3",
+    "express": "^4.17.3",
     "git-diff": "^2.0.6",
     "isomorphic-unfetch": "^3.0.0",
     "lru-cache": "^4.1.3",
